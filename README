@@ -1,0 +1,15 @@
+Experimental code to explore how to build Nuclos client extensions
+which have access to other field values and the surrounding entity instance.
+
+It turned out that Nuclos is lacking some API functionality, thus this demo contains 
+some really really ugly code as a workaround until such an API is available;
+therefore it also functions as a suggestion of what's needed in real workd applications.
+
+Build directions:
+
+- tested with JDK 7 (JDK 8 not yet fully supported by Nuclos)
+- mvn install
+- remove previous version from [WHEREVER]/Nuclos/extensions/client
+- copy ext-client/target/client-extensions-demo-*-SNAPSHOT.jar to [WHEREVER]/Nuclos/extensions/client
+- reinstall Nuclos
+- optionally clear local javaws caches
