@@ -1,0 +1,13 @@
+deploy
+.project
+.settings/
+.classpath
+target/
+bin/
+*.class
+*.jar
+*.zip
+*~
+*.orig
+/key
+

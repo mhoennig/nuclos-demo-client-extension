@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:sec="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security.xsd">
+
+	<!-- 
+		Disable load-time weaving
+		http://static.springsource.org/spring/docs/3.1.x/spring-framework-reference/html/aop.html#aop-aj-ltw
+	 -->
+	<context:load-time-weaver weaver-class="org.nuclos.common.startup.NuclosContextLoadTimeWeaver"/>
+
+    <!--
+		Enable Annotation with @Configurable
+		http://forum.springsource.org/archive/index.php/t-39571.html
+	-->
+	<context:annotation-config />
+	<!--
+		Turn on AspectJ @Configurable support. As a result, any time you
+		instantiate an object, Spring will attempt to perform dependency
+		injection on that object. This occurs for instantiation via the "new"
+		keyword, as well as via reflection. This is possible because AspectJ
+		is used to "weave" Roo-based applications at compile time. In effect
+		this feature allows dependency injection of any object at all in your
+		system, which is a very useful feature (without @Configurable you'd
+		only be able to dependency inject objects acquired from Spring or
+		subsequently presented to a specific Spring dependency injection
+		method). Roo applications use this useful feature in a number of
+		areas, such as @PersistenceContext injection into entities.
+	-->
+	<!-- context:spring-configured / -->
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+		<property name="properties">
+			<props>
+				<prop key="url.remoting">http://localhost/nuclos/remoting</prop>
+				<prop key="url.jms">http://localhost/nuclos/jmsbroker</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean class="org.nuclos.client.nuclet.NucletComponentPostProcessor">
+		<property name="nucletComponentRepository" ref="nucletComponentRepository" />
+	</bean>
+	
+	<!-- project stuff -->
+	
+	<!-- ATTENTION: Do only list real beans here, e.g. "Universal Components" are not instancable via Spring! 
+			And for deployments, we want to hide the Test components.
+	<bean class="de.javagil.nuclos.extensions.client.PeerLayoutComponentFactory"/>
+	<bean class="de.javagil.nuclos.extensions.client.demo.DemoLayoutComponentFactory"/>
+	<!-- project stuff end -->
+
+</beans>

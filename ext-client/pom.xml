@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>de.javagil.nuclos</groupId>
+		<artifactId>extensions-demo</artifactId>
+		<version>${DEMO.Extensions.version}</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<groupId>de.javagil.nuclos</groupId>
+	<artifactId>client-extensions-demo</artifactId>
+	<version>${DEMO.Extensions.version}</version>
+	<packaging>jar</packaging>
+	<name>javagil Nuclos Client Extensions Demo</name>
+	<url>http://www.javagil.de</url>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.nuclos</groupId>
+			<artifactId>nuclos-client</artifactId>
+			<version>${nuclos.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- This is only needed because of https://jira.springsource.org/browse/SPR-6819 -->
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.0.0.GA</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<!-- index/ -->
+						<!-- manifest>
+							<addClasspath>true</addClasspath>
+							<mainClass>org.nuclos.client.main.Main</mainClass>
+							<packageName>com.nuclos.client</packageName>
+						</manifest -->
+						<manifestEntries>
+							<Permissions>all-permissions</Permissions>
+							<Codebase>*</Codebase>
+							<Trusted-Only>true</Trusted-Only>
+							<Trusted-Library>true</Trusted-Library>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+</project>
